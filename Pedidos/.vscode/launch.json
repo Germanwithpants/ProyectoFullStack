@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringbootCrudPedidosApplication<springboot_crud_pedidos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.proyecto._d.springbootcrud.springboot_crud_pedidos.SpringbootCrudPedidosApplication",
+            "projectName": "springboot_crud_pedidos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
