@@ -12,7 +12,7 @@ public class Producto {
     private Long id;
     private String nombre;
     private String descripcion;
-    private String precio;
+    private int precio;
     private Integer cantidad;
     private String categoria;
 
@@ -34,10 +34,10 @@ public class Producto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public String getPrecio() {
+    public int getPrecio() {
         return precio;
     }
-    public void setPrecio(String precio) {
+    public void setPrecio(int precio) {
         this.precio = precio;
     }
     public Integer getCantidad() {
@@ -52,7 +52,7 @@ public class Producto {
     public void setCategoría(String categoría) {
         this.categoria = categoría;
     }
-    public Producto(Long id, String nombre, String descripcion, String precio, Integer cantidad, String categoria) {
+    public Producto(Long id, String nombre, String descripcion, int precio, Integer cantidad, String categoria) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
