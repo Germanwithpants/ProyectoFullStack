@@ -1,2 +1,2 @@
-En esta etapa de proyecto ya definimos los Micro servicios claves la arquitectura CSR también incluimos las base de datos con MySQL validando los métodos CRUD con peticiones en Postman, trabajando con un método SOLID 
+En esta etapa de proyecto ya definimos los Micro servicios claves la arquitectura CSR también incluimos las base de datos con MySQL validando los métodos CRUD con peticiones en Postman, trabajando con un método SOLID.
 En resumen, migrar EcoMarket a microservicios nos permitió mejorar la escalabilidad y mantenibilidad del sistema. Aplicamos conocimientos sólidos en Spring, Maven, JPA y Git, validando todo con Postman. El proyecto está disponible en GitHub, listo para futuras mejoras.”
