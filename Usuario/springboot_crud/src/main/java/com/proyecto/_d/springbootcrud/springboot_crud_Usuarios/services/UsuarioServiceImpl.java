@@ -13,10 +13,14 @@ import com.proyecto._d.springbootcrud.springboot_crud_Usuarios.entities.Usuario;
 public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private UsuarioRepository repository;
+<<<<<<< HEAD
     
     public UsuarioServiceImpl(UsuarioRepository repository) {
         this.repository = repository;
     }
+=======
+
+>>>>>>> fe0cc51396bb70a42a180c70bfc643c335183a6e
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> findByAll() {
