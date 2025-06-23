@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringbootCrudProductoApplication<springboot_crud_producto>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.proyecto._d.springbootcrud.springboot_crud_producto.SpringbootCrudProductoApplication",
+            "projectName": "springboot_crud_producto",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

@@ -17,6 +17,10 @@ public class ProductoServiceImpl implements ProductoService{
 @Autowired
     private ProductoRepository repository;
 
+    public ProductoServiceImpl(ProductoRepository repository) {
+    this.repository = repository;
+}
+
     @Override
     @Transactional(readOnly = true)
     public List<Producto> findByAll() {
