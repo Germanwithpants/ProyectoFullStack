@@ -1,4 +1,4 @@
-package com.proyecto._d.springbootcrud.springboot_crud_Usuarios.services;
+package com.proyecto._d.springbootcrud.springboot_crud_usuario.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,20 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.proyecto._d.springbootcrud.springboot_crud_Usuarios.controllers.UsuarioRepository;
-import com.proyecto._d.springbootcrud.springboot_crud_Usuarios.entities.Usuario;
+import com.proyecto._d.springbootcrud.springboot_crud_usuario.controllers.UsuarioRepository;
+import com.proyecto._d.springbootcrud.springboot_crud_usuario.entities.Usuario;
+
+
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+
     @Autowired
     private UsuarioRepository repository;
-<<<<<<< HEAD
-    
     public UsuarioServiceImpl(UsuarioRepository repository) {
         this.repository = repository;
     }
-=======
-
->>>>>>> fe0cc51396bb70a42a180c70bfc643c335183a6e
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> findByAll() {
@@ -43,7 +41,5 @@ public class UsuarioServiceImpl implements UsuarioService {
         });
         return usuarioOptional;
     }
-
-
-    
 }
+    

@@ -1,8 +1,9 @@
-package com.proyecto._d.springbootcrud.springboot_crud.testcontrollers;
+package com.proyecto._d.springbootcrud.springboot_crud_usuario.controllers;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.proyecto._d.springbootcrud.springboot_crud_Usuarios.controllers.UsuarioRestController;
-import com.proyecto._d.springbootcrud.springboot_crud_Usuarios.entities.Usuario;
-import com.proyecto._d.springbootcrud.springboot_crud_Usuarios.services.UsuarioService;
+import com.proyecto._d.springbootcrud.springboot_crud_usuario.entities.Usuario;
+import com.proyecto._d.springbootcrud.springboot_crud_usuario.services.UsuarioService;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -50,7 +51,7 @@ public class UsuarioRestControllerTest {
 
         mockMvc.perform(get("/api/usuarios/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nombre").value("Prod1"));
+                .andExpect(jsonPath("$.nombre").value("Felipe"));
     }
 
     @Test
@@ -72,7 +73,7 @@ public class UsuarioRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(nuevo)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(3));
+                .andExpect(jsonPath("$.id").value(2));
     }
 
     @Test
