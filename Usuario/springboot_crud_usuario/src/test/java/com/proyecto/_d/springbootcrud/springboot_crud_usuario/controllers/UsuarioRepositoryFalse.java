@@ -11,20 +11,22 @@ import com.proyecto._d.springbootcrud.springboot_crud_usuario.entities.Usuario;
 
 public class UsuarioRepositoryFalse implements UsuarioRepository{
 
-        private final Map<Long, Usuario> baseDatos = new HashMap<>();
+    private final Map<Long, Usuario> baseDatos = new HashMap<>();
     private long idSecuencia = 3;
 
     public UsuarioRepositoryFalse() {
-        baseDatos.put(1L, new Usuario(1L, "Usuario 1", "Pass 1",  "Correo 1", "Admint 1"));
-        baseDatos.put(1L, new Usuario(1L, "Usuario 2", "Pass 2",  "Correo 2", "Logistic 1"));
+        
+        baseDatos.put(1L, new Usuario(1L, "Usuario 1", "Desc 1", "100",  "Cat 1"));
+        baseDatos.put(2L, new Usuario(2L, "Usuario 2", "Desc 2", "200", "Cat 2"));
     }
+
     @Override
-    public <S extends Usuario> S save(S usuario) {
-        if (usuario.getId() == null) {
-            usuario.setId(idSecuencia++);
+    public <S extends Usuario> S save(S Usuario) {
+        if (Usuario.getId() == null) {
+            Usuario.setId(idSecuencia++);
         }
-        baseDatos.put(usuario.getId(), usuario);
-        return usuario;
+        baseDatos.put(Usuario.getId(), Usuario);
+        return Usuario;
     }
 
     @Override
@@ -38,8 +40,8 @@ public class UsuarioRepositoryFalse implements UsuarioRepository{
     }
 
     @Override
-    public void delete(Usuario usuario) {
-        baseDatos.remove(usuario.getId());
+    public void delete(Usuario Usuario) {
+        baseDatos.remove(Usuario.getId());
     }
 
     // Métodos no usados, pero requeridos por CrudRepository (pueden dejarse sin implementar si no se usan)

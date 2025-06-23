@@ -1,7 +1,6 @@
 package com.proyecto._d.springbootcrud.springboot_crud_usuario.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -23,14 +22,14 @@ public class UsuarioServiceTest {
     @Test
     void findByAllTest() {
         List<Usuario> usuarios = usuarioService.findByAll();
-        assertEquals(1, usuarios.size());
+        assertEquals(2, usuarios.size());
     }
 
     @Test
     void findByIdTest() {
         Optional<Usuario> usuario = usuarioService.findById(1L);
         assertTrue(usuario.isPresent());
-        assertEquals("Usuario 2", usuario.get().getNombre());
+        assertEquals("Usuario 1", usuario.get().getNombre());
     }
 
     @Test
