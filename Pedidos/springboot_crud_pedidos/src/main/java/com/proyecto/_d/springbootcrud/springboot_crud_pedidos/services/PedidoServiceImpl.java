@@ -22,6 +22,12 @@ public class PedidoServiceImpl implements PedidoService{
     @Autowired
     private RestTemplate restTemplate;
 
+    public PedidoServiceImpl() {}
+
+    public PedidoServiceImpl(PedidoRepository repository) {
+        this.repository = repository;
+    }
+
     @Autowired
     private PedidoRepository repository;
 

@@ -42,11 +42,18 @@ public class PedidoRestController {
         return ResponseEntity.notFound().build()
         ;
     }
-    @PostMapping()
-    public ResponseEntity<Pedido> crearPedido (@RequestBody Pedido unPedido){
-    System.out.println("Pedido recibido: " + unPedido);
-    System.out.println("Usuario ID: " + unPedido.getUsuarioId());
-    return ResponseEntity.status(HttpStatus.CREATED).body(service.save(unPedido));
+    @PostMapping
+public ResponseEntity<Pedido> crearPedido(@RequestBody Pedido pedido) {
+    try {
+        // Validación de datos
+        if (pedido.getUsuarioId() == null || pedido.getProductos() == null || pedido.getProductos().isEmpty() || pedido.getFecha() == null) {
+            throw new IllegalArgumentException("Datos inválidos");
+        }
+        Pedido nuevoPedido = service.save(pedido);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPedido);
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.badRequest().build();
+    }
 }
     @PutMapping("/{id}")
     public ResponseEntity<Pedido> modificarPedido(@PathVariable Long id, @RequestBody Pedido pedidoEnviado) {
