@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import com.proyecto._d.springbootcrud.springboot_crud_usuario.entities.Usuario;
 import com.proyecto._d.springbootcrud.springboot_crud_usuario.services.UsuarioService;
 
@@ -27,11 +33,18 @@ public class UsuarioRestController {
     @Autowired
     private UsuarioService service;
 
+    @Operation(summary = "Listar todos los usuarios")
+    @ApiResponse(responseCode = "200", description = "Lista de usuarios obtenida correctamente")
     @GetMapping
     public List<Usuario> listarUsuarios() {
         return service.findByAll();
     }
 
+    @Operation(summary = "Obtener usuario por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
+        @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<?> verUsuario (@PathVariable long id){
         Optional<Usuario> usuarioOptional = service.findById(id);
@@ -41,11 +54,19 @@ public class UsuarioRestController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Crear un nuevo usuario")
+    @ApiResponse(responseCode = "201", description = "Usuario creado correctamente")
     @PostMapping
     public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario unUsuario) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(unUsuario));
     }
 
+
+    @Operation(summary = "Modificar un usuario existente")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuario modificado correctamente"),
+        @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> modificarUsuario(@PathVariable Long id, @RequestBody Usuario unUsuario) {
         Optional <Usuario> usuarioOptional= service.findById(id);
@@ -59,6 +80,12 @@ public class UsuarioRestController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @Operation(summary = "Eliminar usuario por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuario eliminado correctamente"),
+        @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar (@PathVariable Long id){
         Usuario unUsuario = new Usuario();
@@ -69,4 +96,4 @@ public class UsuarioRestController {
         }
         return ResponseEntity.notFound().build();
     }
-    }
+}
