@@ -19,17 +19,28 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proyecto._d.springbootcrud.springboot_crud_producto.entities.Producto;
 import com.proyecto._d.springbootcrud.springboot_crud_producto.services.ProductoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoRestController {
     @Autowired
     private ProductoService service;
     
+    @Operation(summary = "Listar todos los productos")
+    @ApiResponse(responseCode = "200", description = "Listado de productos obtenido correctamente")
     @GetMapping
     public List<Producto> listarProductos() {
         return service.findByAll();
     }
 
+    @Operation(summary = "Obtener un producto por ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Producto encontrado"),
+        @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<?> verProducto(@PathVariable long id) {
         Optional<Producto> productoOptional = service.findById(id);
@@ -39,11 +50,18 @@ public class ProductoRestController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Crear un nuevo producto")
+    @ApiResponse(responseCode = "201", description = "Producto creado exitosamente")
     @PostMapping()
     public ResponseEntity<Producto> crearProducto(@RequestBody Producto productovar) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(productovar));
     }
 
+    @Operation(summary = "Modificar un producto existente por ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Producto actualizado correctamente"),
+        @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Producto> modificarProducto(@PathVariable Long id, @RequestBody Producto productovar) {
         Optional<Producto> productoOptional = service.findById(id);
@@ -59,12 +77,20 @@ public class ProductoRestController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @Operation(summary = "Actualizar solo la cantidad del producto")
+    @ApiResponse(responseCode = "200", description = "Cantidad actualizada correctamente")
     @PutMapping("/{id}/cantidad")
     public ResponseEntity<Producto> actualizarCantidad(@PathVariable Long id, @RequestBody Map<String, Integer> body) {
     Producto producto = service.actualizarCantidad(id, body.get("cantidad"));
     return ResponseEntity.ok(producto);
 }
 
+    @Operation(summary = "Eliminar un producto por ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Producto eliminado correctamente"),
+        @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         Producto productovar = new Producto();
@@ -77,4 +103,3 @@ public class ProductoRestController {
     }
 
 }
-
