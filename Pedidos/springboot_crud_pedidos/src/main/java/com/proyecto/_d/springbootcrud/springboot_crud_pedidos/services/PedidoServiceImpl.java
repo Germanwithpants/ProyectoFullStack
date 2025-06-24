@@ -18,18 +18,19 @@ import com.proyecto._d.springbootcrud.springboot_crud_pedidos.entities.UsuarioDT
 
 
 @Service
-public class PedidoServiceImpl implements PedidoService{
+public class PedidoServiceImpl implements PedidoService {
+    public PedidoServiceImpl(RestTemplate restTemplate, PedidoRepository repository) {
+        this.restTemplate = restTemplate;
+        this.repository = repository;
+    }
     @Autowired
     private RestTemplate restTemplate;
 
-    public PedidoServiceImpl() {}
-
-    public PedidoServiceImpl(PedidoRepository repository) {
-        this.repository = repository;
-    }
-
     @Autowired
     private PedidoRepository repository;
+
+    public PedidoServiceImpl() {}
+
 
     @Transactional(readOnly=true)
     public List<Pedido> findByAll() {

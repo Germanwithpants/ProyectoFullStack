@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 
 
@@ -28,11 +30,17 @@ public class PedidoRestController {
     @Autowired
     private PedidoService service;
 
-
+    @Operation(summary = "Listar todos los pedidos")
     @GetMapping
     public List<Pedido> listarPedidos(){
         return service.findByAll();
     }
+
+    @Operation(summary = "Buscar pedido por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Pedido encontrado"),
+        @ApiResponse(responseCode = "404", description = "Pedido no encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<?> verPedido (@PathVariable long id) {
         Optional<Pedido> pedidoOptional = service.findById(id);
@@ -42,19 +50,30 @@ public class PedidoRestController {
         return ResponseEntity.notFound().build()
         ;
     }
+
+    @Operation(summary = "Crear un nuevo pedido")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Pedido creado"),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos")
+    })
     @PostMapping
-public ResponseEntity<Pedido> crearPedido(@RequestBody Pedido pedido) {
+    public ResponseEntity<Pedido> crearPedido(@RequestBody Pedido pedido) {
     try {
-        // Validación de datos
         if (pedido.getUsuarioId() == null || pedido.getProductos() == null || pedido.getProductos().isEmpty() || pedido.getFecha() == null) {
             throw new IllegalArgumentException("Datos inválidos");
         }
         Pedido nuevoPedido = service.save(pedido);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPedido);
-    } catch (IllegalArgumentException e) {
-        return ResponseEntity.badRequest().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
-}
+
+    @Operation(summary = "Modificar un pedido existente")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Pedido actualizado"),
+        @ApiResponse(responseCode = "404", description = "Pedido no encontrado")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Pedido> modificarPedido(@PathVariable Long id, @RequestBody Pedido pedidoEnviado) {
         Optional<Pedido> pedidoOptional = service.findById(id);
@@ -70,6 +89,11 @@ public ResponseEntity<Pedido> crearPedido(@RequestBody Pedido pedido) {
         return ResponseEntity.notFound().build();
     }
     
+    @Operation(summary = "Eliminar un pedido por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Pedido eliminado"),
+        @ApiResponse(responseCode = "404", description = "Pedido no encontrado")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarPedido(@PathVariable Long id) {
         Optional<Pedido> pedidoOptional = service.findById(id);

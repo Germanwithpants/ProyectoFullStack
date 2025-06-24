@@ -34,5 +34,7 @@ public class UsuarioDTO {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+    
+public UsuarioDTO() {
 }
-
+}

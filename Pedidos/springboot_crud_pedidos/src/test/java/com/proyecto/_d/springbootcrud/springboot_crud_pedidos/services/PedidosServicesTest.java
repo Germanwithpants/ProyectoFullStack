@@ -8,25 +8,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import com.proyecto._d.springbootcrud.springboot_crud_pedidos.controllers.PedidoRepository;
 import com.proyecto._d.springbootcrud.springboot_crud_pedidos.controllers.PedidosRepositoryFalse;
 import com.proyecto._d.springbootcrud.springboot_crud_pedidos.entities.Pedido;
 import com.proyecto._d.springbootcrud.springboot_crud_pedidos.entities.ProductoPedido;
-
-
+import com.proyecto._d.springbootcrud.springboot_crud_pedidos.entities.UsuarioDTO;
 
 public class PedidosServicesTest {
-    private final PedidoRepository repositoriofalso = new PedidosRepositoryFalse();
-    private final PedidoServiceImpl pedidoService = new PedidoServiceImpl(repositoriofalso);
+    private PedidoRepository repositoriofalso;
+    private RestTemplate restTemplateFalso;
+    private PedidoServiceImpl pedidoService;
+
+    @BeforeEach
+    public void setup() {
+        
+        repositoriofalso = new PedidosRepositoryFalse();
+        restTemplateFalso = Mockito.mock(RestTemplate.class);
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        ResponseEntity<UsuarioDTO> responseEntity = ResponseEntity.ok(usuarioDTO);
+        Mockito.when(restTemplateFalso.getForEntity(Mockito.anyString(), Mockito.eq(UsuarioDTO.class))).thenReturn(responseEntity);
+
+        pedidoService = new PedidoServiceImpl(restTemplateFalso, repositoriofalso);
+    }
 
     @Test
     void findByAllTest() {
         List<Pedido> pedidos = pedidoService.findByAll();
         assertEquals(2, pedidos.size());
     }
-
+    
     @Test
     void findByIdTest() {
         Optional<Pedido> pedido = pedidoService.findById(1L);
